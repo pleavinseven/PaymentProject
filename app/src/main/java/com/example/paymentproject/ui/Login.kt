@@ -34,6 +34,9 @@ fun LoginPage(){
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Title()
+        Username()
+        Password()
+        SignInButton()
     }
 }
 
@@ -46,6 +49,31 @@ fun Title() {
     )
 }
 
+@Composable
+fun Username() {
+    val emailState = remember{ mutableStateOf(TextFieldValue())}
+    TextField(
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = stringResource(R.string.username_label))},
+        value = emailState.value,
+        onValueChange = { emailState.value = it },
+        shape = RoundedCornerShape(8.dp),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        colors = TextFieldDefaults.textFieldColors(
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent
+        )
+    )
+}
 
+@Composable
+fun Password() {
 
+}
 
+@Composable
+fun SignInButton() {
+    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
+        Text(text = stringResource(id = R.string.login_button))
+    }
+}
