@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PaymentProject</string>
+    <string name="login_title">Tiply</string>
+    <string name="login_button">Login</string>
+    <string name="username_label">username</string>
+    <string name="password_label">password</string>
+</resources>
