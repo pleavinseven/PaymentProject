@@ -61,14 +61,43 @@ fun Username() {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         colors = TextFieldDefaults.textFieldColors(
             unfocusedIndicatorColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent
+            focusedIndicatorColor = Color.Blue
         )
     )
 }
 
 @Composable
 fun Password() {
-
+    val passwordState = remember{ mutableStateOf(TextFieldValue())}
+    val showPassword = remember { mutableStateOf(false)}
+    TextField(
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = stringResource(R.string.password_label))},
+        value = passwordState.value,
+        onValueChange = { passwordState.value = it },
+        shape = RoundedCornerShape(8.dp),
+        colors = TextFieldDefaults.textFieldColors(
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent
+        ),
+        visualTransformation = if(showPassword.value) {
+            VisualTransformation.None
+        } else{
+            PasswordVisualTransformation()
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        trailingIcon = {
+            if (showPassword.value){
+                IconButton(onClick = { showPassword.value = false }) {
+                    Icon(Icons.Filled.Visibility, contentDescription = "" )
+                }
+            } else {
+                IconButton(onClick = { showPassword.value = true }) {
+                    Icon(Icons.Filled.VisibilityOff, contentDescription = "")
+                }
+            }
+        }
+    )
 }
 
 @Composable
