@@ -13,4 +13,4 @@ fun checkPasswordValid(password: String):Boolean {
     return password.length >= 8
 }
 
-fun passwordErrorMessage() = "password is must be 8 characters or greater"
+fun passwordErrorMessage() = "password must be 8 characters or greater"
