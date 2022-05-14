@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -59,59 +60,86 @@ fun Title() {
 
 @Composable
 fun Username() {
-    val emailState = remember { mutableStateOf(TextFieldValue()) }
-    OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = stringResource(R.string.username_label)) },
-        value = emailState.value,
-        onValueChange = { emailState.value = it },
-        shape = RoundedCornerShape(8.dp),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-        colors = TextFieldDefaults.textFieldColors(
-            unfocusedIndicatorColor = Color.LightGray,
-            focusedIndicatorColor = Color.Blue
+    val emailState = remember { EmailState() }
+    Column() {
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(text = stringResource(R.string.username_label)) },
+            value = emailState.text,
+            onValueChange = {
+                emailState.text = it
+                emailState.validate()
+            },
+            shape = RoundedCornerShape(8.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            colors = TextFieldDefaults.textFieldColors(
+                unfocusedIndicatorColor = Color.LightGray,
+                focusedIndicatorColor = Color.Blue
+            ),
+            isError = emailState.error != null
         )
+        emailState.error?.let {
+            ErrorField(it)
+        }
+    }
+}
+
+@Composable
+fun ErrorField(error: String) {
+    Text(
+        text = error,
+        modifier = Modifier.fillMaxWidth(),
+        style = TextStyle(color = MaterialTheme.colors.error)
     )
+
 }
 
 @Composable
 fun Password() {
-    val passwordState = remember { mutableStateOf(TextFieldValue()) }
+    val passwordState = remember { PasswordState() }
     val showPassword = remember { mutableStateOf(false) }
-    OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = stringResource(R.string.password_label)) },
-        value = passwordState.value,
-        onValueChange = { passwordState.value = it },
-        shape = RoundedCornerShape(8.dp),
-        colors = TextFieldDefaults.textFieldColors(
-            unfocusedIndicatorColor = Color.LightGray,
-            focusedIndicatorColor = Color.Blue
-        ),
-        visualTransformation = if (showPassword.value) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
-        },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        trailingIcon = {
-            if (showPassword.value) {
-                IconButton(onClick = { showPassword.value = false }) {
-                    Icon(Icons.Filled.Visibility, contentDescription = "")
-                }
+    Column() {
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(text = stringResource(R.string.password_label)) },
+            value = passwordState.text,
+            onValueChange = {
+                passwordState.text = it
+                passwordState.validate()
+            },
+            shape = RoundedCornerShape(8.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                unfocusedIndicatorColor = Color.LightGray,
+                focusedIndicatorColor = Color.Blue
+            ),
+            visualTransformation = if (showPassword.value) {
+                VisualTransformation.None
             } else {
-                IconButton(onClick = { showPassword.value = true }) {
-                    Icon(Icons.Filled.VisibilityOff, contentDescription = "")
+                PasswordVisualTransformation()
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+                if (showPassword.value) {
+                    IconButton(onClick = { showPassword.value = false }) {
+                        Icon(Icons.Filled.Visibility, contentDescription = "")
+                    }
+                } else {
+                    IconButton(onClick = { showPassword.value = true }) {
+                        Icon(Icons.Filled.VisibilityOff, contentDescription = "")
+                    }
                 }
             }
+        )
+        passwordState.error?.let {
+            ErrorField(it)
         }
-    )
+    }
 }
 
 @Composable
 fun LoginButton() {
     Button(
-        onClick = { viewModel.checkEmailValid(email) }, modifier = Modifier.fillMaxWidth(),
+        onClick = { }, modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Black,
             contentColor = Color.White
@@ -123,9 +151,10 @@ fun LoginButton() {
 
 @Composable
 fun SignUpButton() {
-    Text(modifier = Modifier
-        .clickable(enabled = true) {
+    Text(
+        modifier = Modifier
+            .clickable(enabled = true) {
 
-        }, text = stringResource(id = R.string.signup_button), color = Color.Blue
+            }, text = stringResource(id = R.string.signup_button), color = Color.Blue
     )
 }
