@@ -13,11 +13,12 @@ open class TextFieldState (
     var error by mutableStateOf<String?>(null)
 
     fun validate(){
-        error = if(validator(text)){
+        error = if(isValid()){
             null
         } else{
             errorMessage(text)
         }
     }
 
+    fun isValid() = validator(text)
 }

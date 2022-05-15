@@ -42,9 +42,17 @@ fun LoginPage() {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Title()
-        Username()
-        Password()
-        LoginButton()
+        val emailState = remember { EmailState() }
+        Username(emailState.text, emailState.error) {
+            emailState.text = it
+            emailState.validate()
+        }
+        val passwordState = remember { PasswordState() }
+        Password(passwordState.text, passwordState.error) {
+            passwordState.text = it
+            passwordState.validate()
+        }
+        LoginButton(enabled = emailState.isValid() && passwordState.isValid())
         SignUpButton()
     }
 }
@@ -59,26 +67,22 @@ fun Title() {
 }
 
 @Composable
-fun Username() {
-    val emailState = remember { EmailState() }
+fun Username(email: String, error: String?, onEmailChanged: (String) -> Unit) {
     Column() {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             label = { Text(text = stringResource(R.string.username_label)) },
-            value = emailState.text,
-            onValueChange = {
-                emailState.text = it
-                emailState.validate()
-            },
+            value = email,
+            onValueChange = { onEmailChanged(it) },
             shape = RoundedCornerShape(8.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             colors = TextFieldDefaults.textFieldColors(
                 unfocusedIndicatorColor = Color.LightGray,
                 focusedIndicatorColor = Color.Blue
             ),
-            isError = emailState.error != null
+            isError = error != null
         )
-        emailState.error?.let {
+        error?.let {
             ErrorField(it)
         }
     }
@@ -95,18 +99,14 @@ fun ErrorField(error: String) {
 }
 
 @Composable
-fun Password() {
-    val passwordState = remember { PasswordState() }
+fun Password(password: String, error: String?, onPasswordChanged: (String) -> Unit) {
     val showPassword = remember { mutableStateOf(false) }
     Column() {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             label = { Text(text = stringResource(R.string.password_label)) },
-            value = passwordState.text,
-            onValueChange = {
-                passwordState.text = it
-                passwordState.validate()
-            },
+            value = password,
+            onValueChange = { onPasswordChanged(it) },
             shape = RoundedCornerShape(8.dp),
             colors = TextFieldDefaults.textFieldColors(
                 unfocusedIndicatorColor = Color.LightGray,
@@ -128,22 +128,25 @@ fun Password() {
                         Icon(Icons.Filled.VisibilityOff, contentDescription = "")
                     }
                 }
-            }
+            },
+            isError = error != null
         )
-        passwordState.error?.let {
+        error?.let {
             ErrorField(it)
         }
     }
 }
 
 @Composable
-fun LoginButton() {
+fun LoginButton(enabled: Boolean) {
     Button(
         onClick = { }, modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Black,
             contentColor = Color.White
-        )
+        ),
+        enabled = enabled
+
     ) {
         Text(text = stringResource(id = R.string.login_button))
     }
