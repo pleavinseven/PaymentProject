@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.SnackbarDefaults.backgroundColor
@@ -15,14 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,16 +42,29 @@ fun LoginPage() {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Title()
+        val localFocusManager = LocalFocusManager.current
         val emailState = remember { EmailState() }
-        Username(emailState.text, emailState.error) {
-            emailState.text = it
-            emailState.validate()
-        }
+        Username(emailState.text, emailState.error,
+            onEmailChanged = {
+                emailState.text = it
+                emailState.validate()
+            },
+            onImeAction = {
+                localFocusManager.moveFocus(FocusDirection.Down)
+            }
+        )
+
         val passwordState = remember { PasswordState() }
-        Password(passwordState.text, passwordState.error) {
-            passwordState.text = it
-            passwordState.validate()
-        }
+        Password(passwordState.text, passwordState.error,
+            onPasswordChanged = {
+                passwordState.text = it
+                passwordState.validate()
+            }, onImeAction = {
+                localFocusManager.clearFocus()
+//                if(emailState.isValid() && passwordState.isValid())
+//                    login(emailState.text, passwordState.text)
+            }
+        )
         LoginButton(enabled = emailState.isValid() && passwordState.isValid())
         SignUpButton()
     }
@@ -67,7 +80,12 @@ fun Title() {
 }
 
 @Composable
-fun Username(email: String, error: String?, onEmailChanged: (String) -> Unit) {
+fun Username(
+    email: String,
+    error: String?,
+    onEmailChanged: (String) -> Unit,
+    onImeAction: () -> Unit
+) {
     Column() {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -75,10 +93,18 @@ fun Username(email: String, error: String?, onEmailChanged: (String) -> Unit) {
             value = email,
             onValueChange = { onEmailChanged(it) },
             shape = RoundedCornerShape(8.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             colors = TextFieldDefaults.textFieldColors(
                 unfocusedIndicatorColor = Color.LightGray,
                 focusedIndicatorColor = Color.Blue
+            ),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    onImeAction()
+                }
             ),
             isError = error != null
         )
@@ -99,7 +125,12 @@ fun ErrorField(error: String) {
 }
 
 @Composable
-fun Password(password: String, error: String?, onPasswordChanged: (String) -> Unit) {
+fun Password(
+    password: String,
+    error: String?,
+    onPasswordChanged: (String) -> Unit,
+    onImeAction: () -> Unit
+) {
     val showPassword = remember { mutableStateOf(false) }
     Column() {
         OutlinedTextField(
@@ -117,7 +148,14 @@ fun Password(password: String, error: String?, onPasswordChanged: (String) -> Un
             } else {
                 PasswordVisualTransformation()
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done,
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    onImeAction()
+                }),
             trailingIcon = {
                 if (showPassword.value) {
                     IconButton(onClick = { showPassword.value = false }) {
