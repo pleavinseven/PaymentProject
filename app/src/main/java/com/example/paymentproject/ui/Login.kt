@@ -1,14 +1,11 @@
 package com.example.paymentproject.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -26,11 +23,8 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.paymentproject.HomeViewModel
 import com.example.paymentproject.R
 
-val viewModel = HomeViewModel()
-val email = ""
 
 @Preview(showSystemUi = true)
 @Composable
@@ -86,13 +80,13 @@ fun Username(
     onEmailChanged: (String) -> Unit,
     onImeAction: () -> Unit
 ) {
-    Column() {
+    Column {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             label = { Text(text = stringResource(R.string.username_label)) },
             value = email,
             onValueChange = { onEmailChanged(it) },
-            shape = RoundedCornerShape(8.dp),
+            shape = RoundedCornerShape(15.dp),
             colors = TextFieldDefaults.textFieldColors(
                 unfocusedIndicatorColor = Color.LightGray,
                 focusedIndicatorColor = Color.Blue
@@ -132,13 +126,13 @@ fun Password(
     onImeAction: () -> Unit
 ) {
     val showPassword = remember { mutableStateOf(false) }
-    Column() {
+    Column {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             label = { Text(text = stringResource(R.string.password_label)) },
             value = password,
             onValueChange = { onPasswordChanged(it) },
-            shape = RoundedCornerShape(8.dp),
+            shape = RoundedCornerShape(15.dp),
             colors = TextFieldDefaults.textFieldColors(
                 unfocusedIndicatorColor = Color.LightGray,
                 focusedIndicatorColor = Color.Blue
