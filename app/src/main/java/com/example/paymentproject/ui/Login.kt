@@ -24,6 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.paymentproject.R
+import com.example.paymentproject.ui.model.EmailState
+import com.example.paymentproject.ui.model.PasswordState
 
 
 @Preview(showSystemUi = true)
@@ -192,4 +194,9 @@ fun SignUpButton() {
 
             }, text = stringResource(id = R.string.signup_button), color = Color.Blue
     )
+}
+
+@Composable
+fun GoogleLogin(){
+
 }

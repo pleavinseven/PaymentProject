@@ -1,4 +1,4 @@
-package com.example.paymentproject.ui
+package com.example.paymentproject.ui.model
 
 import android.text.TextUtils
 import android.util.Patterns

@@ -1,4 +1,4 @@
-package com.example.paymentproject.ui
+package com.example.paymentproject.ui.model
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
