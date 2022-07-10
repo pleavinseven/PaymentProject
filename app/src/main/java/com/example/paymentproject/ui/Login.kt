@@ -20,17 +20,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.paymentproject.R
 import com.example.paymentproject.ui.model.EmailState
 import com.example.paymentproject.ui.model.PasswordState
 
 
-@Preview(showSystemUi = true)
+
 @Composable
-fun LoginPage() {
+fun LoginPage(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,7 +62,7 @@ fun LoginPage() {
             }
         )
         LoginButton(enabled = emailState.isValid() && passwordState.isValid())
-        SignUpButton()
+        SignUpButton(navController)
     }
 }
 
@@ -187,12 +187,15 @@ fun LoginButton(enabled: Boolean) {
 }
 
 @Composable
-fun SignUpButton() {
+fun SignUpButton(navController: NavController) {
     Text(
-        modifier = Modifier
-            .clickable(enabled = true) {
-
-            }, text = stringResource(id = R.string.signup_button), color = Color.Blue
+        modifier = Modifier.clickable(onClick = {
+                navController.navigate("signup"){
+                    popUpTo(navController.graph.startDestinationId)
+                    launchSingleTop = true
+                }
+            }),
+        text = stringResource(id = R.string.signup_button), color = Color.Blue
     )
 }
 

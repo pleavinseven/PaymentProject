@@ -21,11 +21,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.paymentproject.R
 
 @Preview(showSystemUi = true)
 @Composable
-fun SignupPage() {
+fun SignupPage(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
