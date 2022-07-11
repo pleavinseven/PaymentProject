@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.paymentproject.ui.LoginPage
-import com.example.paymentproject.ui.SignupPage
+import com.example.paymentproject.ui.composables.LoginPage
+import com.example.paymentproject.ui.composables.SignupPage
 import com.example.paymentproject.ui.theme.PaymentProjectTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,8 +26,8 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
         
         NavHost(navController = navController, startDestination = "login", builder= {
-            composable("login", content = { LoginPage(navController = navController)})
-            composable("signup", content = { SignupPage(navController = navController)})
+            composable("login", content = { LoginPage(navController = navController) })
+            composable("signup", content = { SignupPage(navController = navController) })
         })
     }
 }
