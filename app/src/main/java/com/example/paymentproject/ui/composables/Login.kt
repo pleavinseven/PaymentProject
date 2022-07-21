@@ -30,7 +30,6 @@ import com.example.paymentproject.ui.model.EmailState
 import com.example.paymentproject.ui.model.PasswordState
 
 
-
 @Composable
 fun LoginPage(navController: NavController) {
     Box(
@@ -67,8 +66,10 @@ fun LoginPage(navController: NavController) {
                 label = stringResource(R.string.username_label),
                 value = emailState.text,
                 error = emailState.error,
-                onValueChanged = { emailState.text = it
-                    emailState.validate() },
+                onValueChanged = {
+                    emailState.text = it
+                    emailState.validate()
+                },
                 onImeAction = {
                     localFocusManager.clearFocus()
                     //                if(emailState.isValid() && passwordState.isValid())
@@ -89,8 +90,10 @@ fun LoginPage(navController: NavController) {
                 label = stringResource(R.string.password_label),
                 value = passwordState.text,
                 error = passwordState.error,
-                onValueChanged = { passwordState.text = it
-                    passwordState.validate() },
+                onValueChanged = {
+                    passwordState.text = it
+                    passwordState.validate()
+                },
                 onImeAction = {
                     localFocusManager.clearFocus()
                     //                if(emailState.isValid() && passwordState.isValid())

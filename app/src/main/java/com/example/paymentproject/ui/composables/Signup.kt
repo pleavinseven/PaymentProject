@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
@@ -24,13 +23,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.paymentproject.R
 import com.example.paymentproject.ui.model.EmailState
 import com.example.paymentproject.ui.model.PasswordState
+import com.example.paymentproject.ui.model.RepeatPasswordState
 
 @Composable
 fun SignupPage(navController: NavController) {
@@ -73,35 +72,35 @@ fun SignupPage(navController: NavController) {
                 label = stringResource(R.string.username_label),
                 value = emailState.text,
                 error = emailState.error,
-                onValueChanged = { emailState.text = it
-                    emailState.validate() },
+                onValueChanged = {
+                    emailState.text = it
+                    emailState.validate()
+                },
                 onImeAction = {
                     localFocusManager.clearFocus()
-                    //                if(emailState.isValid() && passwordState.isValid())
-                    //                    login(emailState.text, passwordState.text)
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
                 ),
                 leadingIcon = {
-                        Icon(Icons.Filled.Mail, contentDescription = "email")
+                    Icon(Icons.Filled.Mail, contentDescription = "email")
                 }
             )
 
-            // password
+            // create password
             val passwordState = remember { PasswordState() }
             val showPassword = remember { mutableStateOf(false) }
             MainTextField(
                 label = stringResource(R.string.password_label),
                 value = passwordState.text,
                 error = passwordState.error,
-                onValueChanged = { passwordState.text = it
-                    passwordState.validate() },
+                onValueChanged = {
+                    passwordState.text = it
+                    passwordState.validate()
+                },
                 onImeAction = {
                     localFocusManager.clearFocus()
-                    //                if(emailState.isValid() && passwordState.isValid())
-                    //                    login(emailState.text, passwordState.text)
                 },
                 visualTransformation = if (showPassword.value) {
                     VisualTransformation.None
@@ -110,7 +109,7 @@ fun SignupPage(navController: NavController) {
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done,
+                    imeAction = ImeAction.Next,
                 ),
                 leadingIcon = {
                     if (passwordState.isValid()) {
@@ -122,28 +121,30 @@ fun SignupPage(navController: NavController) {
                 trailingIcon = {
                     if (showPassword.value) {
                         IconButton(onClick = { showPassword.value = false }) {
-                            Icon(Icons.Filled.Visibility, contentDescription = "")
+                            Icon(Icons.Filled.Visibility, contentDescription = "hide password")
                         }
                     } else {
                         IconButton(onClick = { showPassword.value = true }) {
-                            Icon(Icons.Filled.VisibilityOff, contentDescription = "")
+                            Icon(Icons.Filled.VisibilityOff, contentDescription = "show password")
                         }
                     }
                 }
             )
+            val repeatPasswordState = remember { RepeatPasswordState() }
+            val showRepeatPassword = remember { mutableStateOf(false) }
 
-        MainTextField(
+            MainTextField(
                 label = stringResource(R.string.repeat_password_label),
-                value = passwordState.text,
-                error = passwordState.error,
-                onValueChanged = { passwordState.text = it
-                    passwordState.validate() },
+                value = repeatPasswordState.text,
+                error = repeatPasswordState.error,
+                onValueChanged = {
+                    repeatPasswordState.text = it
+                    repeatPasswordState.validate()
+                },
                 onImeAction = {
                     localFocusManager.clearFocus()
-                    //                if(emailState.isValid() && passwordState.isValid())
-                    //                    login(emailState.text, passwordState.text)
                 },
-                visualTransformation = if (showPassword.value) {
+                visualTransformation = if (showRepeatPassword.value) {
                     VisualTransformation.None
                 } else {
                     PasswordVisualTransformation()
@@ -160,13 +161,13 @@ fun SignupPage(navController: NavController) {
                     }
                 },
                 trailingIcon = {
-                    if (showPassword.value) {
-                        IconButton(onClick = { showPassword.value = false }) {
-                            Icon(Icons.Filled.Visibility, contentDescription = "")
+                    if (showRepeatPassword.value) {
+                        IconButton(onClick = { showRepeatPassword.value = false }) {
+                            Icon(Icons.Filled.Visibility, contentDescription = "hide password")
                         }
                     } else {
-                        IconButton(onClick = { showPassword.value = true }) {
-                            Icon(Icons.Filled.VisibilityOff, contentDescription = "")
+                        IconButton(onClick = { showRepeatPassword.value = true }) {
+                            Icon(Icons.Filled.VisibilityOff, contentDescription = "show password")
                         }
                     }
                 }

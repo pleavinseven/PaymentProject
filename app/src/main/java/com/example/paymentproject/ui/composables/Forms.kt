@@ -1,7 +1,6 @@
 package com.example.paymentproject.ui.composables
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -12,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -39,10 +36,10 @@ fun MainTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    trailingIcon: @Composable (() -> Unit )? = null,
-    leadingIcon: @Composable (() -> Unit )? = null
+    trailingIcon: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null
 
-){
+) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = label) },
@@ -84,7 +81,7 @@ fun LoginButton(enabled: Boolean) {
 fun NavigateToSignUp(navController: NavController) {
     Text(
         modifier = Modifier.clickable(onClick = {
-            navController.navigate("signup"){
+            navController.navigate("signup") {
                 popUpTo(navController.graph.startDestinationId)
                 launchSingleTop = true
             }
@@ -97,7 +94,7 @@ fun NavigateToSignUp(navController: NavController) {
 fun NavigateToLogin(navController: NavController) {
     Text(
         modifier = Modifier.clickable(onClick = {
-            navController.navigate("login"){
+            navController.navigate("login") {
                 popUpTo(navController.graph.startDestinationId)
                 launchSingleTop = true
             }
@@ -111,6 +108,6 @@ fun TermsAndConditions() {
 }
 
 @Composable
-fun GoogleLogin(){
+fun GoogleLogin() {
 
 }
