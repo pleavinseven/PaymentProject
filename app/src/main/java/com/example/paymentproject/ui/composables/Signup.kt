@@ -8,10 +8,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.LockOpen
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,19 +65,31 @@ fun SignupPage(navController: NavController) {
                 fontSize = 18.sp,
             )
 
+            // email
 
             val localFocusManager = LocalFocusManager.current
             val emailState = remember { EmailState() }
-            Username(emailState.text, emailState.error,
-                onEmailChanged = {
-                    emailState.text = it
-                    emailState.validate()
-                },
+            MainTextField(
+                label = stringResource(R.string.username_label),
+                value = emailState.text,
+                error = emailState.error,
+                onValueChanged = { emailState.text = it
+                    emailState.validate() },
                 onImeAction = {
-                    localFocusManager.moveFocus(FocusDirection.Down)
+                    localFocusManager.clearFocus()
+                    //                if(emailState.isValid() && passwordState.isValid())
+                    //                    login(emailState.text, passwordState.text)
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next,
+                ),
+                leadingIcon = {
+                        Icon(Icons.Filled.Mail, contentDescription = "email")
                 }
             )
 
+            // password
             val passwordState = remember { PasswordState() }
             val showPassword = remember { mutableStateOf(false) }
             MainTextField(
@@ -105,9 +114,49 @@ fun SignupPage(navController: NavController) {
                 ),
                 leadingIcon = {
                     if (passwordState.isValid()) {
-                        Icon(Icons.Filled.Lock, contentDescription = "closed lock")
-                    } else {
                         Icon(Icons.Filled.LockOpen, contentDescription = "open lock")
+                    } else {
+                        Icon(Icons.Filled.Lock, contentDescription = "closed lock")
+                    }
+                },
+                trailingIcon = {
+                    if (showPassword.value) {
+                        IconButton(onClick = { showPassword.value = false }) {
+                            Icon(Icons.Filled.Visibility, contentDescription = "")
+                        }
+                    } else {
+                        IconButton(onClick = { showPassword.value = true }) {
+                            Icon(Icons.Filled.VisibilityOff, contentDescription = "")
+                        }
+                    }
+                }
+            )
+
+        MainTextField(
+                label = stringResource(R.string.repeat_password_label),
+                value = passwordState.text,
+                error = passwordState.error,
+                onValueChanged = { passwordState.text = it
+                    passwordState.validate() },
+                onImeAction = {
+                    localFocusManager.clearFocus()
+                    //                if(emailState.isValid() && passwordState.isValid())
+                    //                    login(emailState.text, passwordState.text)
+                },
+                visualTransformation = if (showPassword.value) {
+                    VisualTransformation.None
+                } else {
+                    PasswordVisualTransformation()
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done,
+                ),
+                leadingIcon = {
+                    if (passwordState.isValid()) {
+                        Icon(Icons.Filled.LockOpen, contentDescription = "open lock")
+                    } else {
+                        Icon(Icons.Filled.Lock, contentDescription = "closed lock")
                     }
                 },
                 trailingIcon = {

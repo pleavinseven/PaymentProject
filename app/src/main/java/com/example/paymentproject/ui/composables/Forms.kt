@@ -19,42 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.paymentproject.R
 
-
-@Composable
-fun Username(
-    email: String,
-    error: String?,
-    onEmailChanged: (String) -> Unit,
-    onImeAction: () -> Unit
-) {
-    Column {
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text(text = stringResource(R.string.username_label)) },
-            value = email,
-            onValueChange = { onEmailChanged(it) },
-            shape = RoundedCornerShape(15.dp),
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedIndicatorColor = Color.LightGray,
-                focusedIndicatorColor = Color.Blue
-            ),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            ),
-            keyboardActions = KeyboardActions(
-                onNext = {
-                    onImeAction()
-                }
-            ),
-            isError = error != null
-        )
-        error?.let {
-            ErrorField(it)
-        }
-    }
-}
-
 @Composable
 fun ErrorField(error: String) {
     Text(
@@ -64,7 +28,6 @@ fun ErrorField(error: String) {
     )
 
 }
-
 
 @Composable
 fun MainTextField(

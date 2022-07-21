@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.LockOpen
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,15 +59,27 @@ fun LoginPage(navController: NavController) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()
             )
+
+            // login email
             val localFocusManager = LocalFocusManager.current
             val emailState = remember { EmailState() }
-            Username(emailState.text, emailState.error,
-                onEmailChanged = {
-                    emailState.text = it
-                    emailState.validate()
-                },
+            MainTextField(
+                label = stringResource(R.string.username_label),
+                value = emailState.text,
+                error = emailState.error,
+                onValueChanged = { emailState.text = it
+                    emailState.validate() },
                 onImeAction = {
-                    localFocusManager.moveFocus(FocusDirection.Down)
+                    localFocusManager.clearFocus()
+                    //                if(emailState.isValid() && passwordState.isValid())
+                    //                    login(emailState.text, passwordState.text)
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next,
+                ),
+                leadingIcon = {
+                    Icon(Icons.Filled.Mail, contentDescription = "email")
                 }
             )
             // login password
@@ -98,9 +107,9 @@ fun LoginPage(navController: NavController) {
                 ),
                 leadingIcon = {
                     if (passwordState.isValid()) {
-                        Icon(Icons.Filled.Lock, contentDescription = "closed lock")
-                    } else {
                         Icon(Icons.Filled.LockOpen, contentDescription = "open lock")
+                    } else {
+                        Icon(Icons.Filled.Lock, contentDescription = "closed lock")
                     }
                 },
                 trailingIcon = {
