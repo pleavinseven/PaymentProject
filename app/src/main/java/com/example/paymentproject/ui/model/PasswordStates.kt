@@ -14,4 +14,4 @@ fun checkPasswordValid(password: String):Boolean {
     }
 }
 
-fun passwordErrorMessage() = "password must contain upper and lowercase letters, at least one number and a minimum of 8 characters"
+fun passwordErrorMessage() = "min. 8 char, both upper & lowercase letters and numbers."
