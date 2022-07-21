@@ -7,23 +7,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.paymentproject.R
 
@@ -73,54 +65,40 @@ fun ErrorField(error: String) {
 
 }
 
+
 @Composable
-fun Password(
-    password: String,
+fun MainTextField(
+    label: String,
+    value: String,
     error: String?,
-    onPasswordChanged: (String) -> Unit,
-    onImeAction: () -> Unit
-) {
-    val showPassword = remember { mutableStateOf(false) }
-    Column {
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text(text = stringResource(R.string.password_label)) },
-            value = password,
-            onValueChange = { onPasswordChanged(it) },
-            shape = RoundedCornerShape(15.dp),
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedIndicatorColor = Color.LightGray,
-                focusedIndicatorColor = Color.Blue
-            ),
-            visualTransformation = if (showPassword.value) {
-                VisualTransformation.None
-            } else {
-                PasswordVisualTransformation()
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done,
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    onImeAction()
-                }),
-            trailingIcon = {
-                if (showPassword.value) {
-                    IconButton(onClick = { showPassword.value = false }) {
-                        Icon(Icons.Filled.Visibility, contentDescription = "")
-                    }
-                } else {
-                    IconButton(onClick = { showPassword.value = true }) {
-                        Icon(Icons.Filled.VisibilityOff, contentDescription = "")
-                    }
-                }
-            },
-            isError = error != null
-        )
-        error?.let {
-            ErrorField(it)
-        }
+    onValueChanged: (String) -> Unit,
+    onImeAction: () -> Unit,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    trailingIcon: @Composable (() -> Unit )? = null,
+    leadingIcon: @Composable (() -> Unit )? = null
+
+){
+    OutlinedTextField(
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = label) },
+        value = value,
+        onValueChange = { onValueChanged(it) },
+        shape = RoundedCornerShape(15.dp),
+        colors = TextFieldDefaults.textFieldColors(
+            unfocusedIndicatorColor = Color.LightGray,
+            focusedIndicatorColor = Color.Blue
+        ),
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        isError = error != null
+    )
+    error?.let {
+        ErrorField(it)
     }
 }
 
@@ -163,6 +141,10 @@ fun NavigateToLogin(navController: NavController) {
         }),
         text = stringResource(id = R.string.login_nav_button), color = Color.Blue
     )
+}
+
+@Composable
+fun TermsAndConditions() {
 }
 
 @Composable
