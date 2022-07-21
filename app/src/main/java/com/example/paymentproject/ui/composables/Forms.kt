@@ -37,7 +37,8 @@ fun MainTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     trailingIcon: @Composable (() -> Unit)? = null,
-    leadingIcon: @Composable (() -> Unit)? = null
+    leadingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean = error != null
 
 ) {
     OutlinedTextField(
@@ -50,12 +51,13 @@ fun MainTextField(
             unfocusedIndicatorColor = Color.LightGray,
             focusedIndicatorColor = Color.Blue
         ),
+        singleLine = true,
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
-        isError = error != null
+        isError = isError
     )
     error?.let {
         ErrorField(it)

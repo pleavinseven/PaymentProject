@@ -170,7 +170,8 @@ fun SignupPage(navController: NavController) {
                             Icon(Icons.Filled.VisibilityOff, contentDescription = "show password")
                         }
                     }
-                }
+                },
+                isError = passwordState.text != repeatPasswordState.text
             )
             TermsAndConditions()
             NavigateToLogin(navController)
