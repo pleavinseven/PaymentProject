@@ -14,6 +14,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import com.example.paymentproject.R
 
 @Composable
@@ -65,7 +66,7 @@ fun MainTextField(
 }
 
 @Composable
-fun LoginButton(enabled: Boolean) {
+fun LoginButton(enabled: Boolean, text: Int) {
     Button(
         onClick = { }, modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
@@ -75,33 +76,20 @@ fun LoginButton(enabled: Boolean) {
         enabled = enabled
 
     ) {
-        Text(text = stringResource(id = R.string.login_button))
+        Text(text = stringResource(id = text))
     }
 }
 
 @Composable
-fun NavigateToSignUp(navController: NavController) {
+fun Navigate(navController: NavController, destination: String, text: Int) {
     Text(
         modifier = Modifier.clickable(onClick = {
-            navController.navigate("signup") {
+            navController.navigate(destination) {
                 popUpTo(navController.graph.startDestinationId)
                 launchSingleTop = true
             }
         }),
-        text = stringResource(id = R.string.signup_button), color = Color.Blue
-    )
-}
-
-@Composable
-fun NavigateToLogin(navController: NavController) {
-    Text(
-        modifier = Modifier.clickable(onClick = {
-            navController.navigate("login") {
-                popUpTo(navController.graph.startDestinationId)
-                launchSingleTop = true
-            }
-        }),
-        text = stringResource(id = R.string.login_nav_button), color = Color.Blue
+        text = stringResource(id = text), color = Color.Blue
     )
 }
 
@@ -110,6 +98,5 @@ fun TermsAndConditions() {
 }
 
 @Composable
-fun GoogleLogin() {
-
+fun GoogleLogin(){
 }
