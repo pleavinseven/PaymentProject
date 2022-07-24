@@ -174,7 +174,11 @@ fun SignupPage(navController: NavController) {
                 isError = passwordState.text != repeatPasswordState.text
             )
             TermsAndConditions()
-            NavigateToLogin(navController)
+            LoginButton(
+                enabled = emailState.isValid() && passwordState.isValid(),
+                R.string.signup_button
+            )
+            Navigate(navController, "login", R.string.login_nav_button)
         }
     }
 }
