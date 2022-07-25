@@ -45,6 +45,7 @@ fun LoginPage(navController: NavController) {
                 .background(Color.White),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
             // title
             Text(
                 text = stringResource(id = R.string.login_title),
@@ -57,7 +58,9 @@ fun LoginPage(navController: NavController) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()
             )
-
+            Spacer(modifier = Modifier.height(20.dp))
+            // google login
+            GoogleLogin("Login with Google")
             // login email
             val localFocusManager = LocalFocusManager.current
             val emailState = remember { EmailState() }
@@ -117,11 +120,11 @@ fun LoginPage(navController: NavController) {
                 trailingIcon = {
                     if (showPassword.value) {
                         IconButton(onClick = { showPassword.value = false }) {
-                            Icon(Icons.Filled.Visibility, contentDescription = "")
+                            Icon(Icons.Filled.Visibility, contentDescription = "show password")
                         }
                     } else {
                         IconButton(onClick = { showPassword.value = true }) {
-                            Icon(Icons.Filled.VisibilityOff, contentDescription = "")
+                            Icon(Icons.Filled.VisibilityOff, contentDescription = "hide password")
                         }
                     }
                 }

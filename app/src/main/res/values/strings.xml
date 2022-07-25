@@ -9,5 +9,5 @@
     <string name="password_label">password</string>
     <string name="repeat_password_label">repeat password</string>
     <string name="signup_title">Welcome to Tiply</string>
-    <string name="signup_title_sub">fill in your details below to create an account</string>
+    <string name="signup_title_sub">or fill in your details below to create an account:</string>
 </resources>

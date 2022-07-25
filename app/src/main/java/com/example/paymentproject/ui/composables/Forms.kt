@@ -1,7 +1,11 @@
 package com.example.paymentproject.ui.composables
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -9,12 +13,12 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import com.example.paymentproject.R
 
 @Composable
@@ -98,5 +102,24 @@ fun TermsAndConditions() {
 }
 
 @Composable
-fun GoogleLogin(){
+fun GoogleLogin(text: String){
+    Button(
+        onClick = {},
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp),
+        shape = RoundedCornerShape(15.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color.White,
+            contentColor = Color.Black,
+        ),
+        border = BorderStroke(2.dp, Color.Black)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.google),
+            contentDescription = "google login",
+            Modifier.padding(5.dp)
+        )
+        Text(text = text)
+    }
 }

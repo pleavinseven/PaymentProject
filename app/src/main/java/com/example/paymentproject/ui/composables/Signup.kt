@@ -59,6 +59,8 @@ fun SignupPage(navController: NavController) {
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold
             )
+            Spacer(modifier = Modifier.height(15.dp))
+            GoogleLogin(text = "Sign up with Google")
             Text(
                 text = stringResource(R.string.signup_title_sub),
                 fontSize = 18.sp,
