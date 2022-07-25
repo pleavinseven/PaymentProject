@@ -184,6 +184,7 @@ fun SignupPage(navController: NavController) {
                 R.string.signup_button
             )
             Navigate(navController, "login", R.string.login_nav_button)
+            Spacer(modifier = Modifier.height(50.dp))
         }
     }
 }

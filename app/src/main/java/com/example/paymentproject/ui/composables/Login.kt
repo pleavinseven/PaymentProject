@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -65,6 +66,12 @@ fun LoginPage(navController: NavController) {
             Spacer(modifier = Modifier.height(20.dp))
             // google login
             GoogleLogin("Login with Google")
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "or",
+                textAlign = TextAlign.Center,
+                fontSize = 18.sp,
+            )
             // login email
             val localFocusManager = LocalFocusManager.current
             val emailState = remember { EmailState() }
@@ -141,6 +148,7 @@ fun LoginPage(navController: NavController) {
                 R.string.login_button
             )
             Navigate(navController, "signup", R.string.signup_nav_button)
+            Spacer(modifier = Modifier.height(50.dp))
         }
     }
 }
