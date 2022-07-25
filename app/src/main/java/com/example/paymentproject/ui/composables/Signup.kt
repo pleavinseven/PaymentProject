@@ -3,7 +3,9 @@ package com.example.paymentproject.ui.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -44,7 +46,8 @@ fun SignupPage(navController: NavController) {
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(16.dp)
-                .background(Color.White),
+                .background(Color.White)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Image(

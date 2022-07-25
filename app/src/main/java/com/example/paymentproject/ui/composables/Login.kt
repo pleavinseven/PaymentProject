@@ -3,7 +3,10 @@ package com.example.paymentproject.ui.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -42,10 +45,11 @@ fun LoginPage(navController: NavController) {
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(16.dp)
-                .background(Color.White),
+                .background(Color.White)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(50.dp))
             // title
             Text(
                 text = stringResource(id = R.string.login_title),
@@ -124,7 +128,10 @@ fun LoginPage(navController: NavController) {
                         }
                     } else {
                         IconButton(onClick = { showPassword.value = true }) {
-                            Icon(Icons.Filled.VisibilityOff, contentDescription = "hide password")
+                            Icon(
+                                Icons.Filled.VisibilityOff,
+                                contentDescription = "hide password"
+                            )
                         }
                     }
                 }
