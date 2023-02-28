@@ -1,9 +1,9 @@
 # PaymentProject
 
 ## General info
-Currently a login and sign up page for a payments/tipping app in the process of being built.
+Welcome to the Tiply app login and sign up page! This is a work in progress project that is currently being built using Jetpack Compose.
 
-The project is made using jetpack compose and will soon integrate a google login and stripe payment system.
+The app will soon feature integration with Google Login and Stripe Payment System for a seamless user experience.
 
 ![tiply_login](https://github.com/pleavinseven/PaymentProject/blob/master/readmeimages/tiply_login_portfolio_227x479.png?raw=true)
 ![tiply_signup](https://github.com/pleavinseven/PaymentProject/blob/master/readmeimages/tiply_signup_portfolio_227x479.png?raw=true)
